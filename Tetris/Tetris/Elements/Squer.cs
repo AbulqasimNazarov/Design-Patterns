@@ -1,18 +1,20 @@
 ﻿
-
 namespace Tetris.Elements;
 
-public class Squer
-{
-    public string? ElementForm { get; set; }
 
+using Tetris.Elements.Base;
+
+public class Squer : Element
+{
+    private string elementForm { get; set; }
+    public override string Form { get => elementForm; set => elementForm = value; } 
     public Squer()
     {
-        this.ElementForm = "██";
+        this.elementForm = "██";
     }
 
     public override string ToString()
     {
-        return this.ElementForm!;
+        return this.Form!;
     }
 }

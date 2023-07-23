@@ -1,5 +1,7 @@
 ﻿
 
+using Tetris.Services;
+
 namespace Tetris
 {
     public class GameManager
@@ -7,9 +9,9 @@ namespace Tetris
         private static GameManager instance;
         private static readonly object padlock = new object();
 
-        private int gameWidth = 15;
-        private int gameHeight = 20;
-        private int currentX = 15 / 2;
+        private const int gameWidth = 15;
+        private const int gameHeight = 20;
+        private int currentX = gameWidth / 2;
         private int currentY = 0;
 
         public int CurrentX { get { return currentX; } set { currentX = value; } }
@@ -19,7 +21,7 @@ namespace Tetris
 
 
         private string symbol1 = "██";
-        private bool[,] grid = new bool[15, 20];
+        private object[,] grid = new object[gameWidth, gameHeight];
 
         private GameManager() { }
 
@@ -27,32 +29,32 @@ namespace Tetris
         {
             get
             {
-                lock (padlock)
+                if (instance == null)
                 {
-                    if (instance == null)
-                    {
-                        instance = new GameManager();
-                    }
-                    return instance;
+                    instance = new GameManager();
                 }
+                return instance;
+
+
+
             }
         }
 
-        public void GameDraw()
+        public void GameDraw(object forma)
         {
             Console.SetCursorPosition(0, 0);
-
+            int rand = Random.Shared.Next(0, 2);
             for (int y = 0; y < gameHeight; y++)
             {
                 for (int x = 0; x < gameWidth; x++)
                 {
                     if (x == currentX && y == currentY)
                     {
-                        Console.Write(symbol1);
+                        Console.Write(forma);
                     }
-                    else if (grid[x, y])
+                    else if (grid[x, y] == forma)
                     {
-                        Console.Write(symbol1);
+                        Console.Write(forma);
                     }
                     else
                     {
@@ -81,12 +83,12 @@ namespace Tetris
 
         public bool IsCollision()
         {
-            return currentY >= gameHeight - 1 || grid[currentX, currentY + 1];
+            return currentY >= gameHeight - 1/* || grid[currentX, currentY + 1]*/;
         }
 
-        public void PlaceSymbol()
+        public void PlaceSymbol(object l)
         {
-            grid[currentX, currentY] = true;
+            grid[currentX, currentY] = l;
         }
     }
 }

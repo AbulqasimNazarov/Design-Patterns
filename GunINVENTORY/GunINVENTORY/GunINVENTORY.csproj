@@ -8,10 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\222.png" />
+    <None Remove="Assets\223.png" />
     <None Remove="Assets\FONmain.png" />
     <None Remove="Assets\M416.png" />
+    <None Remove="Assets\m416Magazin.png" />
+    <None Remove="Assets\m416Scope.png" />
+    <None Remove="Assets\m416Silenter.png" />
     <None Remove="Assets\MagQuicDraw.png" />
     <None Remove="Assets\RedDot.png" />
+    <None Remove="Assets\Silenter.png" />
     <None Remove="Assets\Suppressor.png" />
   </ItemGroup>
 
@@ -22,15 +28,25 @@
     <Resource Include="Assets\M416.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\m416Magazin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\m416Scope.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\m416Silenter.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\MagQuicDraw.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\RedDot.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\Suppressor.png">
+    <Resource Include="Assets\Silenter.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    
   </ItemGroup>
 
 </Project>

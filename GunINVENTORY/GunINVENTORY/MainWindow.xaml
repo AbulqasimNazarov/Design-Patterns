@@ -38,7 +38,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                
+                <TextBox Text="M416" Grid.Column="0" FontSize="60"/>
 
 
                 <Grid Grid.Column="1">
@@ -57,13 +57,14 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <TextBox Text="Power" FontSize="16"
-                                 HorizontalAlignment="Left" 
+                                 HorizontalAlignment="Left"
+                                 
                                  VerticalAlignment="Center"/>
 
                         <ProgressBar x:Name="PowerBar" Grid.Row="1"
                             Height="2" Width="130" 
                             HorizontalAlignment="Left"
-                            Grid.Column="0" Value="59"/>
+                            Grid.Column="0" Value="{Binding DefaultBar}"/>
                     </Grid>
 
                     <Grid Grid.Column="0" Grid.Row="1">
@@ -78,7 +79,7 @@
                         <ProgressBar x:Name="RecoilBar" Grid.Row="1"
                             Height="2" Width="130" 
                             HorizontalAlignment="Left"
-                            Grid.Column="0" Value="40"/>
+                            Grid.Column="0" Value="{Binding DefaultBar}"/>
                     </Grid>
 
 
@@ -95,7 +96,7 @@
                         <ProgressBar x:Name="FiringSpeedBar" Grid.Row="1"
                             Height="2" Width="130" 
                             HorizontalAlignment="Left"
-                            Grid.Column="0" Value="75"/>
+                            Grid.Column="0" Value="{Binding DefaultBar}"/>
                     </Grid>
 
                     <Grid Grid.Column="1" Grid.Row="0">
@@ -110,7 +111,7 @@
                         <ProgressBar x:Name="CapacityBar" Grid.Row="1"
                             Height="2" Width="130" 
                             HorizontalAlignment="Left"
-                            Grid.Column="0" Value="12"/>
+                            Grid.Column="0" Value="{Binding DefaultBar}"/>
                     </Grid>
                     
                     
@@ -126,7 +127,7 @@
                         <ProgressBar x:Name="RangeBar" Grid.Row="1"
                             Height="2" Width="130" 
                             HorizontalAlignment="Left"
-                            Grid.Column="0" Value="12"/>
+                            Grid.Column="0" Value="{Binding DefaultBar}"/>
                     </Grid>
 
 
@@ -145,18 +146,24 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Image x:Name="Red_Dot" 
+                <Image x:Name="Red_DotImage" 
                        Grid.Column="0" 
                        Source="Assets/Silenter.png"
                        PreviewMouseDown="t"/>
                 
-                <Image Grid.Column="1" x:Name="Magazine"
+                <Image Grid.Column="1" x:Name="MagazineImage"
                        Source="Assets/MagQuicDraw.png"
                        PreviewMouseDown="Mag_Click"/>
-                <Image 
-                    Grid.Column="2" Source="Assets/RedDot.png"/>
+                <Image x:Name="ScopeImage"
+                       Grid.Column="2" 
+                       Source="Assets/RedDot.png"
+                       PreviewMouseDown="Scope_Click"/>
+
+                <Button x:Name="Again" Grid.Column="4"
+                        Content="↺" FontSize="35" Click="Again_Click"/>
             </Grid>
 
 

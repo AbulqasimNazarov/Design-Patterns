@@ -7,8 +7,9 @@ public class RedDot : GunDecorator
 {
     public RedDot(Gun wrappe) : base(wrappe)
     {
-        this.Power = 20;
-        this.Recoil = -3;
+        this.power = 5;
+        this.recoil = 13;
+        this.capacity = 0;
     }
 
 }

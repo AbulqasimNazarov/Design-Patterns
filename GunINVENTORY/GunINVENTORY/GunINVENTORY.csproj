@@ -10,10 +10,15 @@
   <ItemGroup>
     <None Remove="Assets\222.png" />
     <None Remove="Assets\223.png" />
+    <None Remove="Assets\7.png" />
     <None Remove="Assets\FONmain.png" />
+    <None Remove="Assets\FullM416.png" />
     <None Remove="Assets\M416.png" />
     <None Remove="Assets\m416Magazin.png" />
+    <None Remove="Assets\m416MagSilent.png" />
     <None Remove="Assets\m416Scope.png" />
+    <None Remove="Assets\m416ScopeSilent.png" />
+    <None Remove="Assets\m416ScopMag.png" />
     <None Remove="Assets\m416Silenter.png" />
     <None Remove="Assets\MagQuicDraw.png" />
     <None Remove="Assets\RedDot.png" />
@@ -25,13 +30,25 @@
     <Resource Include="Assets\FONmain.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\FullM416.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\M416.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\m416Magazin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\m416MagSilent.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\m416Scope.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\m416ScopeSilent.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\m416ScopMag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\m416Silenter.png">

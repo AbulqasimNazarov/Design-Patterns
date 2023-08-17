@@ -4,6 +4,7 @@ using GunINVENTORY.Models;
 using GunINVENTORY.Models.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +24,18 @@ namespace GunINVENTORY;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : Window, INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler? PropertyChanged;
     public bool scoping { get; set; } = false;
     public bool maging { get; set; } = false;
     public bool silenting { get; set; } = false;
+
+    public string FullM416 { get; set; } = "Assets/FullM416.png";
+    public string m416MagSilent { get; set; } = "Assets/m416MagSilent.png";
+    public string M416ScopeSilent { get; set; } = "Assets/m416ScopeSilent.png";
+
+
 
 
     public double DefaultBar { get; set; } = 60;  
@@ -37,10 +45,13 @@ public partial class MainWindow : Window
         InitializeComponent();
         this.DataContext = this;
         Console.WriteLine(this.DefaultBar);
+        
     }
+
 
     private void t(object sender, MouseButtonEventArgs e)
     {
+        
         this.silenting = true;
         this.Red_DotImage.IsEnabled = false;
         this.Red_DotImage.Opacity = 0.2;
@@ -52,17 +63,17 @@ public partial class MainWindow : Window
         var bitmapImage1 = new BitmapImage();
         if (this.scoping == true && this.maging == true)
         {
-            this.m_416.Source = bitmapImage1.ChangePic("Assets/FullM416.png");
+            this.m_416.Source = bitmapImage1.ChangePic(this.FullM416);
             
 
         }
         else if(this.scoping == false && this.maging == true)
         {
-            this.m_416.Source = bitmapImage1.ChangePic("Assets/m416MagSilent.png");
+            this.m_416.Source = bitmapImage1.ChangePic(this.m416MagSilent);
         }
         else if(this.scoping == true && this.maging == false)
         {
-            this.m_416.Source = bitmapImage1.ChangePic("Assets/m416ScopeSilent.png");
+            this.m_416.Source = bitmapImage1.ChangePic(this.M416ScopeSilent);
         }
         else
             this.m_416.Source = bitmapImage1.ChangePic("Assets/m416Silenter.png");

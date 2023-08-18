@@ -10,52 +10,33 @@ namespace Memento.Blogs;
 
 public class BlogCaretaker
 {
-    private int currentIndex = -1;
-    private List<BlogMemento> mementos = new List<BlogMemento>();
+    private List<BlogMemento> _mementos = new List<BlogMemento>();
 
-    private readonly USER originator;
-    public BlogCaretaker()
+    public void SaveMemento(BlogMemento memento)
     {
-
-    }
-    public BlogCaretaker(USER originator)
-    {
-        this.originator = originator;
+        _mementos.Add(memento);
     }
 
-
-
-    public BlogMemento GetPreviousMemento()
+    public BlogMemento RestoreMemento(ref int index)
     {
-        if (currentIndex > 0)
-        {
-            currentIndex--;
-            return mementos[currentIndex];
-        }
-        return null;
+        if (_mementos.Count > 0)
+            return _mementos[index -1];
+        else
+            return null;
     }
+    //private List<BlogMemento> mementos = new List<BlogMemento>();
+    //public USER Originator;
+    //public int loadCounter = 0;
 
-    public BlogMemento GetNextMemento()
-    {
-        if (currentIndex <= mementos.Count - 1)
-        {
-            currentIndex++;
-            return mementos[currentIndex];
-        }
-        return null;
-    }
+    //public BlogCaretaker(USER originator)
+    //{
+    //    this.Originator = originator;
+    //}
 
-    public void AddMemento(BlogMemento memento)
-    {
-        // Обрезать состояния после текущей позиции и добавить новое состояние
-        mementos.RemoveRange(currentIndex + 1, mementos.Count - currentIndex - 1);
-        mementos.Add(memento);
-        currentIndex++;
-    }
     //public void Save()
     //{
-    //    loadCounter = 0;
-    //    var memento = this.originator.Save();
+    //    this.loadCounter = 0;
+    //    var memento = this.Originator.Save();
     //    this.mementos.Add(memento);
     //}
 
@@ -69,6 +50,6 @@ public class BlogCaretaker
     //    if (currentMemento == null)
     //        return;
 
-    //    this.originator.Restore(currentMemento);
+    //    this.Originator.Restore(currentMemento);
     //}
 }

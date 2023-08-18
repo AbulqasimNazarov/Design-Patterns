@@ -12,40 +12,61 @@ using System.Threading.Tasks;
 
 public class USER
 {
-    public string? Name { get; set; }
-    public string? SurName { get; set; }
 
-    public string? imagePath { get; set; }
+    private string _firstName;
+    private string _lastName;
 
-    public BlogMemento Save()
+
+    public string FirstName
     {
-        return new BlogMemento()
-        {
-            Name = this.Name,
-            SurName = this.SurName,
-            imagePath = this.imagePath,
-        };
+        get => _firstName;
+        set => _firstName = value;
     }
 
-    public void Restore(BlogMemento memento)
+    public string LastName
     {
-        this.Name = memento.Name;
-        this.SurName = memento.SurName;
-        this.imagePath = memento.imagePath;
+        get => _lastName;
+        set => _lastName = value;
     }
 
-    //public USER(string name, string surName, string path)
+    public BlogMemento CreateMemento(string _firstName,string _lastName)
+    {
+        return new BlogMemento(_firstName, _lastName);
+    }
+
+    public void SetMemento(BlogMemento memento)
+    {
+        _firstName = memento.FirstName;
+        _lastName = memento.LastName;
+    }
+
+    //public string? Name { get; set; }
+    //public string? SurName { get; set; }
+
+    //public string? imagePath { get; set; }
+
+    //public BlogMemento Save()
     //{
-    //    Name = name;
-    //    SurName = surName;
-    //    this.imagePath = path;
-
+    //    return new BlogMemento()
+    //    {
+    //        Name = this.Name,
+    //        SurName = this.SurName,
+    //        imagePath = this.imagePath,
+    //    };
     //}
 
-    public static List<USER> loadFromJson()
-    {
-        var json = File.ReadAllText("JsonFile/Users.json");
+    //public void Restore(BlogMemento memento)
+    //{
+    //    this.Name = memento.Name;
+    //    this.SurName = memento.SurName;
+    //    this.imagePath = memento.imagePath;
+    //}
 
-        return JsonSerializer.Deserialize<List<USER>>(json);
-    }
+
+    //public static List<USER> loadFromJson()
+    //{
+    //    var json = File.ReadAllText("JsonFile/Users.json");
+
+    //    return JsonSerializer.Deserialize<List<USER>>(json);
+    //}
 }

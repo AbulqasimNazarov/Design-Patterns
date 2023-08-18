@@ -69,11 +69,11 @@
                     <RowDefinition Height="25"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="textBoxName" Grid.Row="1"
-                         Width="150" IsEnabled="False"
+                <TextBox Text="{Binding FirstName}" x:Name="textBoxName" Grid.Row="1"
+                         Width="150"
                          HorizontalAlignment="Left"/>
-                <TextBox x:Name="textBoxSurName" Grid.Row="3"
-                         Width="150" IsEnabled="False"
+                <TextBox Text="{Binding LastName}" x:Name="textBoxSurName" Grid.Row="3"
+                         Width="150" 
                          HorizontalAlignment="Left"/>
             </Grid>
 
@@ -112,7 +112,8 @@
                 </Grid>
 
                 <Button x:Name="buttonSave" Grid.Row="2"
-                        Content="Save" FontSize="30"/>
+                        Content="Save" FontSize="30"
+                        Click="buttonSave_Click"/>
             </Grid>
         </Grid>
 

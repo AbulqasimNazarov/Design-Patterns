@@ -30,24 +30,33 @@ using System.Xml.Linq;
 /// </summary>
 public partial class MainWindow : Window
 {
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
     public List<USER> people = new List<USER>();
+    public List<string> titles = new List<string>();
     public USER u1 = new USER();
     public int Index = 0;
-    private BlogCaretaker caretaker = new BlogCaretaker();
-
+    private BlogCaretaker caretaker;
+    private USER _originator = new USER();
+    private BlogCaretaker _caretaker = new BlogCaretaker();
+    private List<BlogMemento> _redoMementos = new List<BlogMemento>();
 
     public MainWindow()
     {
         InitializeComponent();
-        this.people = USER.loadFromJson();
-        
-        u1.Name = people[Index].Name;
-        u1.SurName = people[Index].SurName;
-        u1.imagePath = people[Index].imagePath;
-        this.textBoxSurName.Text = u1.SurName;
-        this.textBoxName.Text = u1.Name;
-        var bitmapImage1 = new BitmapImage();
-        this.photoImage.Source = bitmapImage1.ChangePic(u1.imagePath!);
+        this.DataContext = this;
+        //this.textBoxSurName.Text = "22";
+
+        //this.people = USER.loadFromJson();
+        //this.caretaker = new BlogCaretaker(this.u1);
+        //u1.Name = people[Index].Name;
+        //u1.SurName = people[Index].SurName;
+        //u1.imagePath = people[Index].imagePath;
+        //this.textBoxSurName.Text = u1.SurName;
+        //this.textBoxName.Text = u1.Name;
+        //caretaker.Save();
+        //var bitmapImage1 = new BitmapImage();
+        //this.photoImage.Source = bitmapImage1.ChangePic(u1.imagePath!);
         //caretaker.Save();
         //caretaker.Load();
         //people = User.loadFromJson("./JsonFile/Users.json");
@@ -57,8 +66,6 @@ public partial class MainWindow : Window
 
     private void UploadButton_Click(object sender, RoutedEventArgs e)
     {
-        //this.people[0].SurName = "ok";
-        
 
         OpenFileDialog openFileDialog = new OpenFileDialog();
         openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp|All Files|*.*";
@@ -80,37 +87,66 @@ public partial class MainWindow : Window
 
     private void SaveState()
     {
-        caretaker.AddMemento(new BlogMemento(this.textBoxName.Text, this.textBoxSurName.Text));
+        
     }
 
     private void UpdateTextBoxes()
     {
-        this.textBoxName.Text = people[this.Index].Name;
-        this.textBoxSurName.Text = people[this.Index].SurName;
-        var bitmapImage1 = new BitmapImage();
-        this.photoImage.Source = bitmapImage1.ChangePic(people[this.Index].imagePath!);
+        
     }
 
     private void BackButton_Click(object sender, RoutedEventArgs e)
     {
-        BlogMemento previousMemento = caretaker.GetPreviousMemento();
-        if (previousMemento != null)
+        BlogMemento memento = _caretaker.RestoreMemento(ref this.Index);
+        if (memento != null)
         {
-            this.textBoxName.Text = previousMemento.Name;
-            this.textBoxSurName.Text = previousMemento.SurName;
+            _originator.SetMemento(memento);
+            this.textBoxName.Text = _originator.FirstName;
+            this.textBoxSurName.Text = _originator.LastName;
         }
     }
 
     private void ForwardButton_Click(object sender, RoutedEventArgs e)
     {
-        BlogMemento nextMemento = caretaker.GetNextMemento();
-        if (nextMemento != null)
+        if (this.Index < _redoMementos.Count - 1)
         {
-            this.textBoxName.Text = nextMemento.Name;
-            this.textBoxSurName.Text = nextMemento.SurName;
+            this.Index++;
         }
+        if (_redoMementos.Count > 0)
+        {
+            BlogMemento redoMemento = _redoMementos[this.Index];
+            _caretaker.SaveMemento(_originator.CreateMemento(this.FirstName, this.LastName));
+
+            _originator.SetMemento(redoMemento);
+            this.textBoxName.Text = _originator.FirstName;
+            this.textBoxSurName.Text = _originator.LastName;
+        }
+
+        
+        //else
+        //{
+        //    this.textBoxName.Text = string.Empty;
+        //    this.textBoxSurName.Text = string.Empty;
+        //}
+        
+        //this.caretaker.Load();
+        //this.Index++;
+        //this.u1.Name = "OK";
     }
 
+
+
     
-  
+
+
+
+    private void buttonSave_Click(object sender, RoutedEventArgs e)
+    {
+        BlogMemento currentMemento = _originator.CreateMemento(this.FirstName, this.LastName);
+        _caretaker.SaveMemento(currentMemento);
+        _redoMementos.Add(currentMemento);
+        this.textBoxName.Text = string.Empty;
+        this.textBoxSurName.Text = string.Empty;
+        this.Index++;
+    }
 }

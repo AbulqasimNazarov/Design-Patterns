@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Memento"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="700">
+        Title="MainWindow" Height="600" Width="700" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -36,10 +36,10 @@
                 <Button Content="Download Photo" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top"
-                        Click="UploadButton_Click"
+                        
                     Grid.Column="0" Grid.Row="1"/>
                 <Image x:Name="photoImage" 
-                   HorizontalAlignment="Center" 
+                       HorizontalAlignment="Center" 
                    VerticalAlignment="Center"/>
             </Grid>
 
@@ -87,7 +87,7 @@
                 
             </Grid.ColumnDefinitions>
 
-            <TextBox x:Name="DescriptionTextBox" IsEnabled="False"
+            <TextBox x:Name="textBoxDescription"
                      Text="Description..."/>
 
             <Grid Grid.Column="1">
@@ -103,12 +103,12 @@
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0"
                             Content="👈" FontSize="30"
-                            x:Name="buttonNext"
-                            Click="BackButton_Click"/>
+                            x:Name="buttonBack"
+                            Click="buttonBack_Click"/>
                     <Button Grid.Column="1"
                             Content="👉" FontSize="30"
-                            x:Name="buttonBack"
-                            Click="ForwardButton_Click"/>
+                            x:Name="buttonNext"
+                            Click="buttonNext_Click"/>
                 </Grid>
 
                 <Button x:Name="buttonSave" Grid.Row="2"

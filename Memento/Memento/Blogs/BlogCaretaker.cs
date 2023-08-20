@@ -10,46 +10,48 @@ namespace Memento.Blogs;
 
 public class BlogCaretaker
 {
-    private List<BlogMemento> _mementos = new List<BlogMemento>();
+    private int Counter = 0;
+    private List<BlogMemento> mementos = new List<BlogMemento>();
+    private List<BlogMemento> _redoStates = new List<BlogMemento>();
 
-    public void SaveMemento(BlogMemento memento)
+    private readonly USER originator;
+    public BlogCaretaker(USER blog)
+	{
+        this.originator = blog;
+	}
+
+    public void Save()
     {
-        _mementos.Add(memento);
+        this.Counter = 0;
+        var memento = this.originator.Save();
+        this.mementos.Add(memento);
     }
 
-    public BlogMemento RestoreMemento(ref int index)
+    public void Load()
     {
-        if (_mementos.Count > 0)
-            return _mementos[index -1];
-        else
-            return null;
+        if (this.mementos == null)
+            return;
+
+        var currentMemento = this.mementos.SkipLast(this.Counter++).LastOrDefault();
+
+        if (currentMemento == null)
+            return;
+
+        this.originator.Restore(currentMemento);
     }
-    //private List<BlogMemento> mementos = new List<BlogMemento>();
-    //public USER Originator;
-    //public int loadCounter = 0;
 
-    //public BlogCaretaker(USER originator)
-    //{
-    //    this.Originator = originator;
-    //}
 
-    //public void Save()
-    //{
-    //    this.loadCounter = 0;
-    //    var memento = this.Originator.Save();
-    //    this.mementos.Add(memento);
-    //}
+    public void Redo()
+    {
+        if (this.mementos == null)
+            return;
 
-    //public void Load()
-    //{
-    //    if (this.mementos == null)
-    //        return;
+        var currentMemento = this.mementos.SkipLast(this.Counter--).LastOrDefault();
 
-    //    var currentMemento = this.mementos.SkipLast(loadCounter++).LastOrDefault();
+        if (currentMemento == null)
+            return;
 
-    //    if (currentMemento == null)
-    //        return;
-
-    //    this.Originator.Restore(currentMemento);
-    //}
+        this.originator.Restore(currentMemento);
+        
+    }
 }

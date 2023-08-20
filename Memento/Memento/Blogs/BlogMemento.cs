@@ -3,30 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Memento.Blogs;
 
 public class BlogMemento
 {
-    public readonly DateTime CreationDate;
+    public readonly DateTime snimok;
 
+    public string? Name { get; set; }
+    public string? Surname { get; set; }
+    public string? Description { get; set; }
+    public BitmapImage? PathImage { get; set; }
 
-    public string FirstName { get; }
-    public string LastName { get; }
-
-    public BlogMemento(string firstName, string lastName)
+    public BlogMemento()
     {
-        FirstName = firstName;
-        LastName = lastName;
+        this.snimok = DateTime.Now;
     }
-    //public string? Name { get; set; }
-    //public string? SurName { get; set; }
-
-    //public string? imagePath { get; set; }
-
-
-    //public BlogMemento()
-    //{
-    //    this.CreationDate = DateTime.Now;
-    //}
 }

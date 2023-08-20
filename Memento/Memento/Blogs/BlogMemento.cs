@@ -14,7 +14,7 @@ public class BlogMemento
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public string? Description { get; set; }
-    public BitmapImage? PathImage { get; set; }
+    public string? PathImage { get; set; }
 
     public BlogMemento()
     {

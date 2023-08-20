@@ -36,7 +36,7 @@
                 <Button Content="Download Photo" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top"
-                        
+                    Click="UploadButton_Click"    
                     Grid.Column="0" Grid.Row="1"/>
                 <Image x:Name="photoImage" 
                        HorizontalAlignment="Center" 
@@ -69,10 +69,10 @@
                     <RowDefinition Height="25"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBox Text="{Binding FirstName}" x:Name="textBoxName" Grid.Row="1"
+                <TextBox x:Name="textBoxName" Grid.Row="1"
                          Width="150"
                          HorizontalAlignment="Left"/>
-                <TextBox Text="{Binding LastName}" x:Name="textBoxSurName" Grid.Row="3"
+                <TextBox x:Name="textBoxSurName" Grid.Row="3"
                          Width="150" 
                          HorizontalAlignment="Left"/>
             </Grid>

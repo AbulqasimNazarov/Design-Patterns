@@ -9,12 +9,19 @@
 
   <ItemGroup>
     <None Remove="Assets\BobMarley.jpg" />
+    <None Remove="Assets\JImCarrey.jfif" />
     <None Remove="JsonFile\Users.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="JsonFile\Users.json">
+    <Resource Include="Assets\JImCarrey.jfif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="JsonFile\Users.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 

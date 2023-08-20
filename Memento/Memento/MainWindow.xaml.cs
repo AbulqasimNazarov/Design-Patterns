@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -33,31 +34,52 @@ public partial class MainWindow : Window
 {
     public USER blog;
     public BlogCaretaker _caretaker;
-    public List<USER> blogs = new List<USER>();
+    public List<BlogMemento> blogs = new List<BlogMemento>();
+    public int index = 0;
 
     public MainWindow()
     {
         InitializeComponent();
-        this.DataContext = this;
+        
+        this.blogs = USER.LoadJson();
+        
+        index = this.blogs.Count - 1;
+        var bitmapImage = new BitmapImage();
+        //"PathImage": "Assets/BobMarley.jpg"
         this.blog = new USER();
         this._caretaker = new BlogCaretaker(this.blog);
-        string json = File.ReadAllText("JsonFile/Users.json");
-
-        //this.blogs = LoadJson();
-
-        //this.textBoxName.Text = this.blogs[this.blogs.Count - 1].Name;
-        //this.textBoxSurName.Text = this.blogs[this.blogs.Count - 1].Surname; 
-        //this.textBoxDescription.Text = this.blogs[this.blogs.Count - 1].Description;
-        //this.photoImage.Source = this.blogs[this.blogs.Count - 1].PathImage;  //(BitmapImage?)this.photoImage.Source;
+        this._caretaker.mementos = this.blogs;
+        this._caretaker.Counter = this._caretaker.mementos.Count - 1;
+        //this._caretaker.Save();
+        this.textBoxName.Text = this.blogs[index].Name;
+        this.textBoxSurName.Text = this.blogs[index].Surname;
+        this.textBoxDescription.Text = this.blogs[index].Description;
+        this.photoImage.Source = bitmapImage.ChangePic(this.blogs[index].PathImage);
 
 
     }
 
-    public List<USER> LoadJson()
-    {
-        string json = File.ReadAllText("JsonFile/Users.json");
 
-        return JsonSerializer.Deserialize<List<USER>>(json);
+
+
+
+    private void UploadButton_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp|All Files|*.*";
+
+        if (openFileDialog.ShowDialog() == true)
+        {
+            try
+            {
+                BitmapImage image = new BitmapImage(new Uri(openFileDialog.FileName));
+                photoImage.Source = image;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
     }
 
 
@@ -66,8 +88,9 @@ public partial class MainWindow : Window
         this.blog.Name = this.textBoxName.Text;
         this.blog.Surname = this.textBoxSurName.Text;
         this.blog.Description = this.textBoxDescription.Text;
-        this.blog.PathImage = (BitmapImage?)this.photoImage.Source;
+        this.blog.PathImage = this.photoImage.Source.ToString();
 
+        //this.blogs.Add(this.blog);
         this._caretaker.Save();
 
     }
@@ -75,7 +98,8 @@ public partial class MainWindow : Window
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
         //this.blogs.Add(this.blog);
-        string json = JsonSerializer.Serialize(this.blog);
+        //this.blogs?.Add(this.blog);
+        string json = JsonSerializer.Serialize(this.blogs);
 
         File.WriteAllText("JsonFile/Users.json", json);
     }
@@ -83,12 +107,12 @@ public partial class MainWindow : Window
     private void buttonBack_Click(object sender, RoutedEventArgs e)
     {
         this._caretaker.Load();
-        this._caretaker.Load();
+        //this._caretaker.Load();
         this.textBoxName.Text = this.blog.Name;
         this.textBoxSurName.Text = this.blog.Surname;
         this.textBoxDescription.Text = this.blog.Description;
         var bitmapImage = new BitmapImage();
-        this.photoImage.Source = this.blog.PathImage;
+        this.photoImage.Source = bitmapImage.ChangePic(this.blog.PathImage);
     }
 
 
@@ -100,6 +124,6 @@ public partial class MainWindow : Window
         this.textBoxSurName.Text = this.blog.Surname;
         this.textBoxDescription.Text = this.blog.Description;
         var bitmapImage = new BitmapImage();
-        this.photoImage.Source = this.blog.PathImage;
+        this.photoImage.Source = bitmapImage.ChangePic(this.blog.PathImage);
     }
 }

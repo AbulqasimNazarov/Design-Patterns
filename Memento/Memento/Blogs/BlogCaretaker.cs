@@ -25,26 +25,25 @@ public class BlogCaretaker
 
     public void Save()
     {
-        //this.Counter++;
+
         var memento = this.originator.Save();
         this.mementos.Add(memento);
     }
 
     public void Load()
     {
-        //this.Counter = this.mementos.Count - 1;
+
         if (this.mementos == null)
             return;
 
         if (this.Counter > 0)
         {
             this.Counter--;
-            //var currentMemento = this.mementos[Counter];
+
         }
         var currentMemento = this.mementos[Counter];
 
-        //if (currentMemento == null)
-        //    return;
+        
         this.originator.Restore(currentMemento);
     }
 
@@ -54,18 +53,15 @@ public class BlogCaretaker
         if (this.mementos == null)
             return;
 
-        var currentMemento = this.mementos[Counter];
-
-        //if (currentMemento == null)
-        //    return;
 
         if (this.Counter < mementos.Count - 1)
         {
             this.Counter++;
-            //var currentMemento = this.mementos[Counter];
+            
         }
+        var currentMemento = this.mementos[Counter];
 
-        this.originator.Restore(this.mementos[this.Counter]);
+        this.originator.Restore(currentMemento);
         
         
     }

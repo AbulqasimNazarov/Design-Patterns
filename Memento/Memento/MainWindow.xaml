@@ -19,7 +19,8 @@
                 <ColumnDefinition Width="80"/>
             </Grid.ColumnDefinitions>
             <Button Content="📋" x:Name="buttonList"
-                    Grid.Column="1"/>
+                    Grid.Column="1"
+                    Click="buttonList_Click"/>
         </Grid>
 
         <Grid Grid.Row="1">

@@ -35,7 +35,11 @@ public partial class MainWindow : Window
     public USER blog;
     public BlogCaretaker _caretaker;
     public List<BlogMemento> blogs = new List<BlogMemento>();
+    public List<string> changes = new List<string>();
+
     public int index = 0;
+
+    ListWindow listWin = new ListWindow();
 
     public MainWindow()
     {
@@ -45,12 +49,12 @@ public partial class MainWindow : Window
         
         index = this.blogs.Count - 1;
         var bitmapImage = new BitmapImage();
-        //"PathImage": "Assets/BobMarley.jpg"
+
         this.blog = new USER();
         this._caretaker = new BlogCaretaker(this.blog);
         this._caretaker.mementos = this.blogs;
         this._caretaker.Counter = this._caretaker.mementos.Count - 1;
-        //this._caretaker.Save();
+
         this.textBoxName.Text = this.blogs[index].Name;
         this.textBoxSurName.Text = this.blogs[index].Surname;
         this.textBoxDescription.Text = this.blogs[index].Description;
@@ -85,29 +89,43 @@ public partial class MainWindow : Window
 
     private void buttonSave_Click(object sender, RoutedEventArgs e)
     {
+        string? currentName = this.blog.Name;
+        string? currentSurname = this.blog.Surname;
+        string? currentPath = this.blog.PathImage;
+        string? currentDescription = this.blog.Description;
         this.blog.Name = this.textBoxName.Text;
         this.blog.Surname = this.textBoxSurName.Text;
         this.blog.Description = this.textBoxDescription.Text;
         this.blog.PathImage = this.photoImage.Source.ToString();
-
-        //this.blogs.Add(this.blog);
+        this.changes.Add(@$"{currentName} => {this.blog.Name}");
+        this.changes.Add(@$"{currentSurname} => {this.blog.Surname}");
+        this.changes.Add(@$"{currentPath} => {this.blog.PathImage}");
+        this.changes.Add(@$"{currentDescription} => {this.blog.Description}");
+        this.listWin = new ListWindow(this.changes);
+        //listWin.Close();
         this._caretaker.Save();
 
     }
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
-        //this.blogs.Add(this.blog);
-        //this.blogs?.Add(this.blog);
+
         string json = JsonSerializer.Serialize(this.blogs);
 
         File.WriteAllText("JsonFile/Users.json", json);
+        listWin.Close();
+        this.Close();
     }
 
     private void buttonBack_Click(object sender, RoutedEventArgs e)
     {
+        this.buttonNext.IsEnabled = true;
         this._caretaker.Load();
-        //this._caretaker.Load();
+        if (this._caretaker.Counter == 0)
+        {
+            this.buttonBack.IsEnabled = false;
+        }
+
         this.textBoxName.Text = this.blog.Name;
         this.textBoxSurName.Text = this.blog.Surname;
         this.textBoxDescription.Text = this.blog.Description;
@@ -118,12 +136,23 @@ public partial class MainWindow : Window
 
     private void buttonNext_Click(object sender, RoutedEventArgs e)
     {
-        this._caretaker.Redo(); // Move to the next saved state
-
+        this.buttonBack.IsEnabled = true;
+        this._caretaker.Redo();
+        if (this._caretaker.Counter == this._caretaker.mementos.Count - 1)
+        {
+            this.buttonNext.IsEnabled = false;
+        }
         this.textBoxName.Text = this.blog.Name;
         this.textBoxSurName.Text = this.blog.Surname;
         this.textBoxDescription.Text = this.blog.Description;
         var bitmapImage = new BitmapImage();
         this.photoImage.Source = bitmapImage.ChangePic(this.blog.PathImage);
+    }
+
+    private void buttonList_Click(object sender, RoutedEventArgs e)
+    {
+        
+        listWin.ShowDialog();
+        listWin.Close();
     }
 }
